@@ -1,0 +1,57 @@
+{
+  "_order": [
+    "main_llm",
+    "archivist",
+    "embedding",
+    "webapp",
+    "ptt_whisper",
+    "compose_service"
+  ],
+  "_standard": [
+    "main_llm",
+    "archivist",
+    "embedding"
+  ],
+  "main_llm": {
+    "name": "Main LLM Server",
+    "port": 8080,
+    "tmux_session": "main_llm_server",
+    "log_file": "~/logs/main_llm.log",
+    "command": "/path/to/llama.cpp/build/bin/llama-server -m ~/models/YOUR-MODEL.gguf --port 8080 --ctx-size 8192 -ngl 99"
+  },
+  "archivist": {
+    "name": "Archivist (small model)",
+    "port": 8081,
+    "tmux_session": "archivist_server",
+    "log_file": "~/logs/archivist.log",
+    "command": "CUDA_VISIBLE_DEVICES=0 /path/to/llama.cpp/build/bin/llama-server -m ~/models/smaller-model.gguf --port 8081 --ctx-size 16384 -ngl 99"
+  },
+  "embedding": {
+    "name": "Embedding Server",
+    "port": 8082,
+    "tmux_session": "embedding_server",
+    "log_file": "~/logs/embedding.log",
+    "command": "/path/to/llama.cpp/build/bin/llama-server -m ~/models/nomic-embed.gguf --port 8082 --ctx-size 8192 -ngl 99"
+  },
+  "webapp": {
+    "name": "Python Web App",
+    "port": 8001,
+    "tmux_session": "webapp_server",
+    "log_file": "~/logs/webapp.log",
+    "command": "cd ~/projects/webapp && source venv/bin/activate && python3 server.py"
+  },
+  "ptt_whisper": {
+    "name": "PTT Whisper",
+    "port": 9191,
+    "tmux_session": "ptt_whisper_server",
+    "log_file": "~/logs/ptt_whisper.log",
+    "command": "WHISPER_MODEL=small ~/whisper_env/bin/python3 ~/path/to/server.py"
+  },
+  "compose_service": {
+    "name": "Docker Compose Service",
+    "port": 8065,
+    "tmux_session": "compose_service_server",
+    "log_file": "~/logs/compose_service.log",
+    "command": "cd ~/projects/someservice && docker compose up -d"
+  }
+}

@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+logs/
+*.bak*
+venv/
+.venv/
+.pytest_cache/
+services.json
